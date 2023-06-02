@@ -77,7 +77,7 @@ public:
 		}
 	}
 
-	int guess(vector<string> input)	{
+	int guessLengthScore(vector<string> input)	{
 		int param1 = input[0].size();
 		int param2 = input[1].size();
 		assertIllegalArgument(input);
@@ -89,7 +89,20 @@ public:
 		if (score100check(input)) return 100;
 		LengthCalculationScore();
 		return score;
-	}	
+	}
+	int guessAlphaScore(vector<string> input) {
+		int param1 = input[0].size();
+		int param2 = input[1].size();
+		assertIllegalArgument(input);
+		maxSize = findMax(param1, param2);
+		minSize = findMin(param1, param2);
+		gapSize = maxSize - minSize;
+		cout << maxSize << ", " << minSize << endl;
+
+		if (score100check(input)) return 100;
+		LengthCalculationScore();
+		return score;
+	}
 
 private:
 	vector<string> question;

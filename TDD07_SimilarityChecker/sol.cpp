@@ -10,6 +10,7 @@ public:
 	int maxSize = 0;
 	int minSize = 0;	
 	int sameCnt = 0;
+	int gapSize = 0;
 	const int LENGTH_SCORE_MAX = 60;
 	explicit SCheck(vector<string> question)
 		: question() {		
@@ -59,7 +60,7 @@ public:
 		return false;
 	}
 
-	bool score100check(vector<string> input, int gapSize)
+	bool score100check(vector<string> input)
 	{
 		if (gapSize == 0) {
 			if (exactlysame(input)) {
@@ -69,22 +70,27 @@ public:
 		return false;
 	}
 
+	void LengthCalculationScore()
+	{
+		if (maxSize == minSize) score =  LENGTH_SCORE_MAX;
+		else if (maxSize >= minSize * 2) score = 0;
+		else {
+			score = LENGTH_SCORE_MAX - (gapSize * LENGTH_SCORE_MAX) / minSize;
+		}
+	}
+
 	int guess(vector<string> input)	{
 		int param1 = input[0].size();
 		int param2 = input[1].size();
 		assertIllegalArgument(input);
 		maxSize = findMax(param1,param2);
 		minSize = findMin(param1, param2);
-		int gapSize = maxSize - minSize;
+		gapSize = maxSize - minSize;
 		cout << maxSize <<", " << minSize << endl;
 
-
-		if (score100check(input, gapSize)) return 100;
-		if (maxSize == minSize) return LENGTH_SCORE_MAX;
-		if (maxSize >= minSize * 2) return 0;
-		return LENGTH_SCORE_MAX - (gapSize* LENGTH_SCORE_MAX) / minSize;
-
-		return 0;
+		if (score100check(input)) return 100;
+		LengthCalculationScore();
+		return score;
 	}	
 
 private:

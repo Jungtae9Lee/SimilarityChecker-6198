@@ -19,14 +19,12 @@ public:
 	int findMax(int a, int b) {
 		if (a > b) 
 			return a;
-		else 
-			return b;
+		return b;
 	}
 	int findMin(int a, int b) {
 		if (a < b) 
 			return a;
-		else 
-			return b;
+		return b;
 	}
 	bool isIncludeCapitalLetter(const string& input) {
 		for (char ch : input) {
